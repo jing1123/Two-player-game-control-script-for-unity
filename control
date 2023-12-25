@@ -1,3 +1,10 @@
+/*在unity上創建一個雙人遊戲(單機版)
+1p為wasd
+2p用方向鍵控制移動
+在無調整專案設定下，原2p移動腳本如下
+且會影響到1p同時移動
+*/
+
 public float rotationspeed;
         float translation = Input.GetAxis("Vertical") * speed;
         translation *= Time.deltaTime;
@@ -8,3 +15,82 @@ public float rotationspeed;
         rotation *= Time.deltaTime;
         transform.Rotate(0, rotation, 0);
         //左右方向鍵控制旋轉
+
+
+//後來將2p移動改成
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Womenmove : MonoBehaviour
+{
+    void Start()
+    {
+        
+    }
+    public float speed_women;//移動速度
+    public float rotationspeed_women;//旋轉速度
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.UpArrow))//按上方向鍵前進
+        {
+            this.gameObject.transform.Translate(Vector3.forward * Time.deltaTime * speed_women);
+        }
+
+        if (Input.GetKey(KeyCode.DownArrow))//按下方向鍵後退
+        {
+            this.gameObject.transform.Translate(Vector3.back * Time.deltaTime * speed_women);
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow))//按左方向鍵控制左旋
+        {
+            this.gameObject.transform.Rotate(Vector3.down * Time.deltaTime * rotationspeed_women);
+        }
+
+        if (Input.GetKey(KeyCode.RightArrow))//按右方向鍵控制右旋
+        {
+            this.gameObject.transform.Rotate(Vector3.up * Time.deltaTime * rotationspeed_women);
+        }
+
+
+//1p移動腳本不變
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Menmove : MonoBehaviour
+{
+    public float speed;
+    public float rotationspeed;
+    void Start()
+    {
+        
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.W))//按W前進
+        {
+            this.gameObject.transform.Translate(new Vector3(0, 0, 1) * speed);
+        }
+
+        if (Input.GetKey(KeyCode.S))//按S後退
+        {
+            this.gameObject.transform.Translate(new Vector3(0, 0, -1) * speed);
+        }
+
+        if (Input.GetKey(KeyCode.D))//按D向右轉
+        {
+            this.gameObject.transform.Rotate(new Vector3(0, 1, 0) * rotationspeed);
+        }
+
+        if (Input.GetKey(KeyCode.A))//按A向左轉
+        {
+            this.gameObject.transform.Rotate(new Vector3(0, -1, 0) * rotationspeed);
+        }
+
+
+    }
+
+
+//最後將camera1、2分別設定在1p、2p視角，並將鏡頭畫面水平各設為原本的1/2，即可在一個主機上完雙人遊戲啦
