@@ -1,0 +1,50 @@
+//雙人遊戲中設定1p要去吃「咖啡」，而2p要去碰「文件」
+//為此設定兩個物件生成的位置與時間等
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Insrander : MonoBehaviour
+{
+    public GameObject[] Objects_coffee;
+    public GameObject[] Objects_file;//分別建立兩個物件的陣列(物品大小、樣子可先調整好再放進預制物prefab中即可)
+
+    public Transform[] Points_coffee;
+    public Transform[] Points_file;//分別兩生成點的陣列(實際就在你想要生成的地方放個空物件，調整位置，並把空物件在unity拉進陣列就好)
+
+    public float Begin_Time;//第一次物品生成時間
+    public float Ins_Time_coffee;//每隔幾秒咖啡杯生成時間
+    public float Ins_Time_file;//每隔幾秒文件生成時間
+
+    void Start()
+    {
+        InvokeRepeating("Ins_Objs", Begin_Time, Ins_Time_coffee);
+        InvokeRepeating("Ins_Objs", Begin_Time, Ins_Time_file);
+        //重複呼叫(“函式名”，第一次間隔幾秒呼叫，每幾秒呼叫一次)。
+    }
+
+    void Update()
+    {
+        
+    }
+
+    void Ins_Objs() //生成物件函式。
+
+    {
+        int Random_Objects_coffee = Random.Range(0, Objects_coffee.Length);
+        int Random_Objects_file = Random.Range(0, Objects_file.Length);
+        //隨機產生0~物件陣列長度的整數-1(不包含最大值所以-1)。
+
+        int Random_Points_coffee = Random.Range(0, Points_coffee.Length);
+        int Random_Points_file = Random.Range(0, Points_file.Length);
+        //隨機產生0~生成點陣列長度的整數-1(不包含最大值所以-1)。
+
+        Instantiate(Objects_coffee[Random_Objects_coffee], Points_coffee[Random_Points_coffee].transform.position, Points_coffee[Random_Points_coffee].transform.rotation);
+        Instantiate(Objects_file[Random_Objects_file], Points_file[Random_Points_file].transform.position, Points_file[Random_Points_file].transform.rotation);
+        //Instantiate實例化(要生成的物件, 物件位置, 物件旋轉值);
+
+    }
+
+}
