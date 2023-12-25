@@ -1,0 +1,10 @@
+public float rotationspeed;
+        float translation = Input.GetAxis("Vertical") * speed;
+        translation *= Time.deltaTime;
+        transform.Translate(0, 0, translation);
+        //上下方向鍵控制前進後退
+
+        float rotation = Input.GetAxis("Horizontal") * rotationspeed;
+        rotation *= Time.deltaTime;
+        transform.Rotate(0, rotation, 0);
+        //左右方向鍵控制旋轉
